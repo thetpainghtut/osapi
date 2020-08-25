@@ -3,16 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Item;
+use Illuminate\Http\Request;
 use App\Http\Resources\ItemResource;
 
 class ItemController extends Controller
 {
-    public function __construct($value='')
-    {
-        // $this->middleware('auth:api');
-    }
+    // public function __construct($value='')
+    // {
+    //     $this->middleware('auth');
+    // }
+    
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +22,12 @@ class ItemController extends Controller
     public function index()
     {
         $items = Item::all();
-        return ItemResource::collection($items);
+
+        return response()->json([
+            'status' => 'ok',
+            'totalResults' => count($items),
+            'items' => ItemResource::collection($items)
+        ]);
     }
 
     /**
@@ -32,7 +38,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //dd
+        //dd($request);
 
         //validation
         $request->validate([
@@ -65,29 +71,32 @@ class ItemController extends Controller
         $item->save();
 
         //redirect
-        return new ItemResource($item);
+        return (new ItemResource($item))
+                    ->response()
+                    ->setStatusCode(201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Item $item)
     {
-        $item = Item::findOrFail($id);
-        return new ItemResource($item);
+        return (new ItemResource($item))
+                    ->response()
+                    ->setStatusCode(200);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Item $item)
     {
         //
     }
@@ -95,10 +104,10 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Item $item)
     {
         //
     }

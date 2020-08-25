@@ -5,6 +5,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Brand;
 use App\Subcategory;
+use App\Http\Resources\BrandResource;
+use App\Http\Resources\SubcategoryResource;
 
 class ItemResource extends JsonResource
 {
@@ -15,6 +17,7 @@ class ItemResource extends JsonResource
      * @return array
      */
     public static $wrap = 'item';
+
     public function toArray($request)
     {
         // return parent::toArray($request);
@@ -27,8 +30,8 @@ class ItemResource extends JsonResource
             'item_price' => $this->price,
             'item_discount' => $this->discount,
             'item_desc' => $this->description,
-            'brand' => Brand::find($this->brand_id),
-            'subcategory' => Subcategory::find($this->subcategory_id),
+            'brand' => new BrandResource(Brand::find($this->brand_id)),
+            'subcategory' => new SubcategoryResource(Subcategory::find($this->subcategory_id)),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
