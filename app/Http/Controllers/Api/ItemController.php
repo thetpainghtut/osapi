@@ -84,9 +84,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        return (new ItemResource($item))
-                    ->response()
-                    ->setStatusCode(200);
+        return new ItemResource($item);
     }
 
     /**
@@ -110,5 +108,65 @@ class ItemController extends Controller
     public function destroy(Item $item)
     {
         //
+    }
+
+    /**
+     * Filtering the resource from storage.
+     *
+     * @param  \App\Item  $item
+     * @return \Illuminate\Http\Response
+     */
+    public function filter(Request $request)
+    {
+        $q = $request->q;
+
+        $items = Item::where('name','LIKE',"%{$q}%")->get();
+        // For Case Sensitive (collation => utf8_bin) 
+        
+        return response()->json([
+            'status' => 'ok',
+            'totalResults' => count($items),
+            'items' => ItemResource::collection($items)
+        ]);
+    }
+
+    /**
+     * Filtering the resource from storage by brand.
+     *
+     * @param  \App\Item  $item
+     * @return \Illuminate\Http\Response
+     */
+    public function byBrand(Request $request)
+    {
+        $bid = $request->brand;
+
+        $items = Item::where('brand_id',$bid)->get();
+        // For Case Sensitive (collation => utf8_bin) 
+        
+        return response()->json([
+            'status' => 'ok',
+            'totalResults' => count($items),
+            'items' => ItemResource::collection($items)
+        ]);
+    }
+
+    /**
+     * Filtering the resource from storage by subcategory.
+     *
+     * @param  \App\Item  $item
+     * @return \Illuminate\Http\Response
+     */
+    public function bySubcategory(Request $request)
+    {
+        $sid = $request->subcategory;
+
+        $items = Item::where('subcategory_id',$sid)->get();
+        // For Case Sensitive (collation => utf8_bin)
+        
+        return response()->json([
+            'status' => 'ok',
+            'totalResults' => count($items),
+            'items' => ItemResource::collection($items)
+        ]);
     }
 }

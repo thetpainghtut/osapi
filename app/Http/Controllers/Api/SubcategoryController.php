@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Brand;
 use App\Http\Controllers\Controller;
+use App\Subcategory;
 use Illuminate\Http\Request;
-use App\Http\Resources\BrandResource;
+use App\Http\Resources\SubcategoryResource;
 
-class BrandController extends Controller
+class SubcategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +16,12 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
-        
+        $subcategories = Subcategory::all();
+
         return response()->json([
             'status' => 'ok',
-            'totalResults' => count($brands),
-            'items' => BrandResource::collection($brands)
+            'totalResults' => count($subcategories),
+            'items' => SubcategoryResource::collection($subcategories)
         ]);
     }
 
@@ -39,22 +39,22 @@ class BrandController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Brand  $brand
+     * @param  \App\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function show(Brand $brand)
+    public function show(Subcategory $subcategory)
     {
-        return new BrandResource($brand);
+        return new SubcategoryResource($subcategory);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Brand  $brand
+     * @param  \App\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Brand $brand)
+    public function update(Request $request, Subcategory $subcategory)
     {
         //
     }
@@ -62,10 +62,10 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Brand  $brand
+     * @param  \App\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy(Subcategory $subcategory)
     {
         //
     }
