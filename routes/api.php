@@ -18,16 +18,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiresource('brands','Api\BrandController');
+Route::prefix('v1')->group(function () {
 
-Route::apiresource('subcategories','Api\SubcategoryController');
+  Route::apiresource('brands','Api\BrandController');
 
-Route::apiresource('items','Api\ItemController');
+  Route::apiresource('subcategories','Api\SubcategoryController');
 
-Route::post('register','Api\AuthController@register')->name('register');
+  Route::apiresource('items','Api\ItemController');
 
-Route::get('filter_item','Api\ItemController@filter')->name('filter_item');
+  Route::post('register','Api\AuthController@register')->name('register');
 
-Route::get('itemByBrand','Api\ItemController@byBrand')->name('itemByBrand');
+  Route::get('filter_item','Api\ItemController@filter')->name('filter_item');
 
-Route::get('itemBySubcategory','Api\ItemController@bySubcategory')->name('itemBySubcategory');
+  Route::get('itemByBrand','Api\ItemController@byBrand')->name('itemByBrand');
+
+  Route::get('itemBySubcategory','Api\ItemController@bySubcategory')->name('itemBySubcategory');
+
+});
