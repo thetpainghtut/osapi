@@ -1,0 +1,41 @@
+DB
+----
+
+Leagues
+-----
+  - name
+  - photo
+
+Clubs
+  - name
+  - photo
+  - country
+
+
+club_league
+  - league_id
+  - club_id
+
+
+  
+
+Coach
+  - name
+  - club_id
+
+Manger
+  - name
+  - club_id
+
+Player
+  - name
+  - 
+
+club_player
+  - player_id
+  - club_id
+
+Case
+  - rent
+  - sell
+

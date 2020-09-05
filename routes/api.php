@@ -34,4 +34,6 @@ Route::prefix('v1')->group(function () {
 
   Route::get('itemBySubcategory','Api\ItemController@bySubcategory')->name('itemBySubcategory');
 
+  Route::apiresource('orders','Api\OrderController');
+
 });
