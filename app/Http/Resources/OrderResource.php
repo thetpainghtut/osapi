@@ -5,6 +5,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\User;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\ItemResource;
+
 
 class OrderResource extends JsonResource
 {
@@ -25,6 +27,7 @@ class OrderResource extends JsonResource
             'order_voucherno' => $this->voucherno,
             'order_total' => $this->total,
             'order_user' => new UserResource(User::find($this->user_id)),
+            'order_items' => ItemResource::collection($this->items),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
