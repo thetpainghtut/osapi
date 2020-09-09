@@ -14,8 +14,7 @@ class Order extends Model
   {
     return $this->belongsToMany('App\Item','order_detail')
                 ->withPivot('qty')
-                ->withTimestamps();
-    
+                ->withTimestamps(); 
   }
 
   public function user($value='')

@@ -32,6 +32,9 @@ class ItemResource extends JsonResource
             'item_desc' => $this->description,
             'brand' => new BrandResource(Brand::find($this->brand_id)),
             'subcategory' => new SubcategoryResource(Subcategory::find($this->subcategory_id)),
+            'qty' => $this->whenPivotLoaded('order_detail', function () {
+                return $this->pivot->qty;
+            }),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
