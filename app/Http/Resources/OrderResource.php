@@ -27,9 +27,7 @@ class OrderResource extends JsonResource
             'order_voucherno' => $this->voucherno,
             'order_total' => $this->total,
             'order_user' => new UserResource(User::find($this->user_id)),
-            'order_items' => ItemResource::collection($this->whenPivotLoaded('order_detail', function () {
-                return $this->pivot->qty;
-            })),
+            'order_items' => ItemResource::collection($this->items()),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
