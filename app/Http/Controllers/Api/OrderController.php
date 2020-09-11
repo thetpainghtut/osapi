@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Order;
 use Illuminate\Http\Request;
 use App\Http\Resources\OrderResource;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -20,7 +21,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::orderBy('id','desc')->get();
 
         return response()->json([
             'status' => 'ok',
@@ -50,7 +51,7 @@ class OrderController extends Controller
         $order = new Order;
         $order->voucherno = uniqid(); // 8880598734
         $order->orderdate = date('Y-m-d');
-        $order->user_id = 1; // auth id (1 => users table)
+        $order->user_id = Auth::id(); // auth id (1 => users table)
         $order->note = $request->notes;
         $order->total = $total;
         $order->save(); // only saved into order table
