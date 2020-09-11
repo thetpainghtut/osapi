@@ -27,7 +27,7 @@ class OrderResource extends JsonResource
             'order_voucherno' => $this->voucherno,
             'order_total' => $this->total,
             'order_user' => new UserResource(User::find($this->user_id)),
-            'order_notes' => $this->notes,
+            'order_notes' => $this->note,
             'order_items' => ItemResource::collection($this->items),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
